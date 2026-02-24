@@ -28,23 +28,24 @@ We all agreed that movies are commodities—people consume them, evaluate them, 
 ### Table 1: Movies
 - MovieID
 - Title
+- ReleaseDate
+- Description
 
-### Table 2: ReleaseYears
-- ReleaseYearID
-- YearValue
-
-### Table 3: Genres
+### Table 2: Genres
 - GenreID
 - GenreName
 
-### Table 4: Ratings
-- RatingID
+### Table 3: Ratings
+- ID
 - MovieID
 - Stars (1–5)
 - RatedAt (Date/Time)
 
-## 5. GUI Design
+### Table 4: Movie_Genres
+- MovieID
+- GenreID
 
+## 5. GUI Design
 The GUI will include:
 - Movie entry and edit forms
 - Genre assignment interface
