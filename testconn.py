@@ -1,11 +1,21 @@
+from dotenv import load_dotenv
 import os
-import psycog2
+import psycopg2
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
+load_dotenv()
 
 try:
-    with psycopg2.connect(SUPABASE_URL) as conn:
-        with conn.cursor() as cur:
-            print("conneted")
-except Exception as e
-    print("error:", e)
+    conn = psycopg2.connect(
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        sslmode="require"
+    )
+
+    print("Connected.")
+    conn.close()
+
+except Exception as e:
+    print(e)
