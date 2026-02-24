@@ -1,21 +1,16 @@
 from dotenv import load_dotenv
+from db import get_connection
 import os
 import psycopg2
 
 load_dotenv()
 
+conn = get_connection()
+cur = conn.cursor()
+
 try:
-    conn = psycopg2.connect(
-        host=os.getenv("DB_HOST"),
-        port=os.getenv("DB_PORT"),
-        database=os.getenv("DB_NAME"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        sslmode="require"
-    )
-
-    print("Connected.")
-    conn.close()
-
+    cur.execute("SELECT 1")
+    print("Database connection successful.")
 except Exception as e:
-    print(e)
+    print(f"Database connection failed: {e}")
+
