@@ -1,6 +1,4 @@
 from dotenv import load_dotenv
-import os
-import requests
 from db import get_connection
 from pathlib import Path
 
