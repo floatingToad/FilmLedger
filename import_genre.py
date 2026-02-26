@@ -2,10 +2,13 @@ from dotenv import load_dotenv
 import os
 import requests
 from db import get_connection
+from pathlib import Path
 
-load_dotenv()
+print("TMDB_API_KEY:", repr(os.getenv("TMDB_API_KEY")))
+
+load_dotenv(dotenv_path=(Path(__file__).parent / ".env"))
+
 TMBD_API_KEY = os.getenv("TMDB_API_KEY")
-
 
 #api request 
 url = "https://api.themoviedb.org/3/genre/movie/list"
