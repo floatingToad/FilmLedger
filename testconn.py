@@ -1,9 +1,5 @@
-from dotenv import load_dotenv
 from db import get_connection
 import os
-import psycopg2
-
-load_dotenv()
 
 conn = get_connection()
 cur = conn.cursor()

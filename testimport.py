@@ -1,13 +1,11 @@
-from dotenv import load_dotenv
 from db import get_connection
-from pathlib import Path
 import os
-import psycopg2
 import requests
 
-load_dotenv(dotenv_path=Path(__file__).parent / ".env")
-
-TMDB_API_KEY = os.getenv("TMBD_API_KEY")
+# Load environment variables
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+if not TMDB_API_KEY:
+    raise RuntimeError("TMDB_API_KEY missing") 
 
 conn = get_connection()
 cur = conn.cursor()

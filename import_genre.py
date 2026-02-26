@@ -1,17 +1,18 @@
-from dotenv import load_dotenv
 from db import get_connection
 from pathlib import Path
+import os
+import requests
+import db
 
-print("TMDB_API_KEY:", repr(os.getenv("TMDB_API_KEY")))
-
-load_dotenv(dotenv_path=(Path(__file__).parent / ".env"))
-
-TMBD_API_KEY = os.getenv("TMDB_API_KEY")
+# Load environment variables
+TMDB_API_KEY = os.getenv("TMBD_API_KEY")
+if not TMDB_API_KEY:
+    raise RuntimeError("TMBD_API_KEY missing")
 
 #api request 
 url = "https://api.themoviedb.org/3/genre/movie/list"
 params = {
-    "api_key": TMBD_API_KEY,
+    "api_key": TMDB_API_KEY,
 }
 response = requests.get(url, params=params)
 if response.status_code != 200:
@@ -23,11 +24,11 @@ data = response.json()
 genres = data["genres"]
 
 #insert genres, if ID exist update the record
-with get_connection() as conn:
+with db.get_connection() as conn:
     with conn.cursor() as cur:
         for genre in genres:
             cur.execute("""
-            INSERT INTO genres (tmbd_id, genre)
+            INSERT INTO genres (tmbd_id, name)
             VALUES (%s, %s)
             ON CONFLICT (tmbd_id)
             DO UPDATE SET name = EXCLUDED.name;  
