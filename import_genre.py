@@ -5,9 +5,9 @@ import requests
 import db
 
 # Load environment variables
-TMDB_API_KEY = os.getenv("TMBD_API_KEY")
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 if not TMDB_API_KEY:
-    raise RuntimeError("TMBD_API_KEY missing")
+    raise RuntimeError("TMDB_API_KEY missing")
 
 #api request 
 url = "https://api.themoviedb.org/3/genre/movie/list"
@@ -28,9 +28,9 @@ with db.get_connection() as conn:
     with conn.cursor() as cur:
         for genre in genres:
             cur.execute("""
-            INSERT INTO genres (tmbd_id, name)
+            INSERT INTO genres (tmdb_id, name)
             VALUES (%s, %s)
-            ON CONFLICT (tmbd_id)
+            ON CONFLICT (tmdb_id)
             DO UPDATE SET name = EXCLUDED.name;  
             """, (genre["id"], genre["name"]))
     conn.commit()
